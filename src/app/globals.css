@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
+  :root {
+    /* macOS Sonoma Bright Theme */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 211 100% 50%; /* macOS system blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 94%;
+    --secondary-foreground: 210 40% 30%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 240 10% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 211 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* macOS system colors */
+    --macos-sidebar: 220 13% 95%;
+    --macos-toolbar: 220 13% 97%;
+    --macos-separator: 220 13% 88%;
+    --macos-selection: 211 100% 50%;
+    --macos-hover: 220 13% 93%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* macOS Sonoma wallpaper with gradient fallback */
+    background: 
+      url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=2560&auto=format&fit=crop') center/cover no-repeat fixed,
+      linear-gradient(135deg, #1a1a2e 0%, #16213e 20%, #0f3460 40%, #533483 60%, #e94560 80%, #f38181 100%);
+    background-size: cover;
+  }
+
+  ::selection {
+    background-color: hsl(211 100% 50% / 0.25);
+  }
+
+  /* macOS-style scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 100px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@layer utilities {
+  /* Glass utilities */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+  }
+  .glass-panel {
+    @apply bg-gradient-to-br from-white/80 to-white/50 backdrop-blur-2xl border border-white/60;
+  }
+
+  /* macOS Sidebar */
+  .macos-sidebar {
+    background-color: hsl(var(--macos-sidebar));
+    border-right: 1px solid hsl(var(--macos-separator));
+  }
+  .macos-sidebar-item {
+    @apply flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors;
+    color: hsl(var(--foreground) / 0.8);
+  }
+  .macos-sidebar-item:hover {
+    background-color: hsl(var(--macos-hover));
+  }
+  .macos-sidebar-item.active {
+    background-color: hsl(var(--macos-selection));
+    color: white;
+    font-weight: 500;
+  }
+
+  /* macOS Toolbar */
+  .macos-toolbar {
+    @apply flex items-center px-4 py-2 gap-2;
+    background: linear-gradient(to bottom, hsl(220 13% 98%), hsl(220 13% 96%));
+    border-bottom: 1px solid hsl(var(--macos-separator));
+  }
+
+  /* macOS Segmented Control */
+  .macos-segmented-control {
+    @apply inline-flex items-center p-0.5 rounded-lg;
+    background: hsl(220 13% 92%);
+  }
+  .macos-segment {
+    @apply px-4 py-1.5 rounded-md text-xs font-medium cursor-pointer transition-all;
+    color: hsl(var(--foreground) / 0.7);
+  }
+  .macos-segment.active {
+    @apply bg-white shadow-sm;
+    color: hsl(var(--foreground));
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04);
+  }
+  .macos-segment:hover:not(.active) {
+    color: hsl(var(--foreground));
+  }
+
+  /* macOS Card */
+  .macos-card {
+    @apply bg-white rounded-xl p-5;
+    border: 1px solid hsl(var(--macos-separator));
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .macos-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  /* macOS List Row */
+  .macos-list-row {
+    @apply flex items-center px-4 py-2.5 cursor-pointer transition-colors;
+    border-bottom: 1px solid hsl(var(--macos-separator) / 0.5);
+  }
+  .macos-list-row:hover {
+    background-color: hsl(var(--macos-hover));
+  }
+  .macos-list-row.active {
+    background-color: hsl(var(--macos-selection));
+    color: white;
+  }
+
+  /* macOS Squircle Icon */
+  .macos-icon {
+    @apply flex items-center justify-center;
+    border-radius: 22.37%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+
+  /* macOS Tag */
+  .macos-tag {
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium;
+    background: hsl(220 13% 95%);
+    color: hsl(var(--foreground) / 0.7);
+  }
+
+  /* macOS Mail-style field */
+  .macos-field {
+    @apply flex items-center px-3 py-2 text-sm;
+    border-bottom: 1px solid hsl(var(--macos-separator));
+  }
+  .macos-field-label {
+    @apply font-medium text-muted-foreground min-w-[60px] mr-3;
+  }
+
+  /* macOS Badge */
+  .macos-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    background: hsl(142 71% 45% / 0.12);
+    color: hsl(142 71% 35%);
+  }
+}
